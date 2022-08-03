@@ -1,6 +1,10 @@
 package robatortas.code.achie.files.read;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 /*
@@ -18,7 +22,7 @@ import java.util.Scanner;
 
 public class Interpreter {
 	
-	private String path = "";
+	private String path = "test.achie";
 	// Scans user input
 	private Scanner scan = new Scanner(System.in);
 	
@@ -28,7 +32,7 @@ public class Interpreter {
 	private String workingDir = System.getProperty("user.dir");
 	
 	public Interpreter() {
-		
+		getVariableValue("Variable");
 	}
 	
 	public String getVariableName(String path) {
@@ -42,7 +46,23 @@ public class Interpreter {
 	}
 	
 	// Returns string that will then be parsed to desired data type.
-	public void getVariableValue() {
+	public String getVariableValue(String desiredValue) {
+		String result = "";
 		
+		// Passes through every single line in the achie file
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(achie));
+			int lines = 0;
+			String buffer = "";
+			while((buffer = reader.readLine()) != null) {
+				lines++;
+				result = buffer;
+				System.out.println(result);
+			}
+			reader.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }
